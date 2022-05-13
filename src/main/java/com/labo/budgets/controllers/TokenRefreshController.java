@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.labo.budgets.security.JwtUtil;
 import com.labo.budgets.services.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,6 +25,7 @@ public class TokenRefreshController {
     }
 
     @GetMapping(path = "/refreshToken")
+    @PostAuthorize("hasAnyAuthority('ADMIN')")
     public void refreshToken(HttpServletRequest request, HttpServletResponse response) throws Exception{
         String authToken = request.getHeader(JwtUtil.AUTH_HEADER);
         if(authToken!=null && authToken.startsWith(JwtUtil.PREFIX)){
