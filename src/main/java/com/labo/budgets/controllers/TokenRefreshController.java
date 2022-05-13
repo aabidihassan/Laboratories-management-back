@@ -15,11 +15,11 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("api/token")
-public class TokenRefresh {
+public class TokenRefreshController {
 
     private AccountService accountService;
 
-    public TokenRefresh(@Autowired AccountService accountService){
+    public TokenRefreshController(@Autowired AccountService accountService){
         this.accountService = accountService;
     }
 
