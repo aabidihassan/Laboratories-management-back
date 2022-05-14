@@ -19,6 +19,23 @@ public class Utilisateur {
     private String username;
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
+    private String email;
+    private String adresse;
+    private String telephone;
     @ManyToMany(fetch = FetchType.EAGER)
     List<AppRole> roles = new ArrayList<>();
+    @OneToMany(mappedBy = "utilisateur")
+    private List<Besoin> besoins = new ArrayList<>();
+    @OneToMany(mappedBy = "utilisateur")
+    List<BudgetPersonnel> budgetPersonnels = new ArrayList<>();
+    @ManyToOne
+    private Laboratoire labo;
+
+
+    public Utilisateur(String username, String password, List<AppRole> roles){
+        this.username = username;
+        this.password = password;
+        this.roles = roles;
+    }
+
 }
