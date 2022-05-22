@@ -13,6 +13,7 @@ import java.security.Principal;
 import java.util.*;
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("api/users")
 public class AccountRestController {
 

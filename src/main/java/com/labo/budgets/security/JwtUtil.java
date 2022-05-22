@@ -16,7 +16,7 @@ public class JwtUtil {
     public static final String SECRET = "mySecret123";
     public static final String AUTH_HEADER = "Authorization";
     public static final String PREFIX = "Bearer ";
-    public static final long EXPIRE_ACCESS_TOKEN = 5*60*1000;
+    public static final long EXPIRE_ACCESS_TOKEN = 1*60*1000;
     public static final long EXPIRE_REFRESH_TOKEN = 30*24*60*60*1000;
 
 
@@ -48,7 +48,7 @@ public class JwtUtil {
         Utilisateur user = accountService.loadUserByUsername(username);
         return JWT.create()
                 .withSubject(user.getUsername())
-                .withExpiresAt(new Date(System.currentTimeMillis()+(5*60*1000)))
+                .withExpiresAt(new Date(System.currentTimeMillis()+JwtUtil.EXPIRE_ACCESS_TOKEN))
                 .withIssuer(url)
                 .withClaim("roles", user.getRoles().stream().map(ga->ga.getLibelle()).collect(Collectors.toList()))
                 .sign(algorithm);

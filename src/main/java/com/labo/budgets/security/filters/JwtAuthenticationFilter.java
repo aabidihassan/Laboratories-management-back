@@ -67,9 +67,10 @@ return null;
 
         String jwtRefreshToken = JwtUtil.createRefreshToken(user, request.getRequestURL().toString());
 
-        Map<String, String> idToken = new HashMap<>();
-        idToken.put("access-token", jwtAccessToken);
-        idToken.put("refrsh-token", jwtRefreshToken);
+        Map<String, Object> idToken = new HashMap<>();
+        idToken.put("accesstoken", jwtAccessToken);
+        idToken.put("refrshtoken", jwtRefreshToken);
+        idToken.put("roles", user.getAuthorities());
         response.setContentType("application/json");
         new ObjectMapper().writeValue(response.getOutputStream(), idToken);
     }
