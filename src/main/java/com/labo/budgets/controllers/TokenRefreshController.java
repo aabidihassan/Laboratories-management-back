@@ -40,7 +40,7 @@ public class TokenRefreshController {
 
                 Map<String, String> idToken = new HashMap<>();
                 idToken.put("accesstoken", jwtAccessToken);
-                idToken.put("refrshtoken", jwt);
+                idToken.put("refreshtoken", jwt);
                 response.setContentType("application/json");
                 new ObjectMapper().writeValue(response.getOutputStream(), idToken);
             }catch (Exception e){

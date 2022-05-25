@@ -29,18 +29,6 @@ public class AccountRestController {
         return accountService.listUsers();
     }
 
-    @PostMapping("/save")
-    @PostAuthorize("hasAnyAuthority('ADMIN')")
-    public Utilisateur saveUser(@RequestBody Utilisateur user){
-        return this.accountService.addNewUser(user);
-    }
-
-    @GetMapping("/{username}")
-    @PostAuthorize("hasAnyAuthority('ADMIN')")
-    public Utilisateur getUserByUsername(@PathVariable String username){
-        return this.accountService.loadUserByUsername(username);
-    }
-
     @PostMapping("roletouser")
     @PostAuthorize("hasAnyAuthority('ADMIN')")
     public void affectRoleToUser(@RequestBody AffectRoleToUserDto affectRoleToUserDto){
