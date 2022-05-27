@@ -23,12 +23,6 @@ public class AccountRestController {
         this.accountService = accountService;
     }
 
-    @GetMapping("/")
-    @PostAuthorize("hasAnyAuthority('ADMIN')")
-    public List<Utilisateur> listUsers(){
-        return accountService.listUsers();
-    }
-
     @PostMapping("roletouser")
     @PostAuthorize("hasAnyAuthority('ADMIN')")
     public void affectRoleToUser(@RequestBody AffectRoleToUserDto affectRoleToUserDto){
@@ -36,7 +30,6 @@ public class AccountRestController {
     }
 
     @GetMapping(path = "/profile")
-    @PostAuthorize("hasAnyAuthority('ADMIN', 'USER')")
     public Utilisateur profile(Principal principal){
         return accountService.loadUserByUsername(principal.getName());
     }
