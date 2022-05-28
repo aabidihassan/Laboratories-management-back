@@ -28,7 +28,7 @@ public class Utilisateur {
     private List<Besoin> besoins = new ArrayList<>();
     @OneToMany(mappedBy = "utilisateur")
     List<BudgetPersonnel> budgetPersonnels = new ArrayList<>();
-    @ManyToOne
+    @ManyToOne @JsonIgnore
     private Laboratoire labo;
 
 

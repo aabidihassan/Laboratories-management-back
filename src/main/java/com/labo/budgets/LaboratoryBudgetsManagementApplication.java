@@ -59,7 +59,6 @@ public class LaboratoryBudgetsManagementApplication {
             accountService.affectRoleToUser("admin", "ADMIN");
             accountService.affectRoleToUser("user", "USER");
             accountService.affectRoleToUser("respo", "RESPO");
-            accountService.affectRoleToUser("respo", "USER");
 
         };
     }

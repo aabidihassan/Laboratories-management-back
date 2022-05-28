@@ -41,9 +41,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.cors().configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues());
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.authorizeRequests().antMatchers("/login/**", "/token/**").permitAll();
-        http.authorizeRequests().antMatchers("/api/**").hasAnyAuthority("ADMIN", "RESPO");
-        http.authorizeRequests().antMatchers("/users/profile/**").hasAuthority("ADMIN");
-        http.authorizeRequests().antMatchers("/users/profile/**").hasAuthority("RESPO");
+        //http.authorizeRequests().antMatchers("/api/**").hasAnyAuthority("ADMIN", "RESPO");
         http.authorizeRequests().anyRequest().authenticated();
         http.addFilter(new JwtAuthenticationFilter(authenticationManagerBean()));
         http.addFilterBefore(new JwtAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);

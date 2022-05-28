@@ -7,6 +7,7 @@ import com.labo.budgets.dto.AffectRoleToUserDto;
 import com.labo.budgets.models.Utilisateur;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PostAuthorize;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
@@ -30,6 +31,8 @@ public class AccountRestController {
     }
 
     @GetMapping(path = "/profile")
+    //@PostAuthorize("hasAnyAuthority('RESPO', 'ADMIN', 'USER')")
+    @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('RESPO') or hasAuthority('USER')")
     public Utilisateur profile(Principal principal){
         return accountService.loadUserByUsername(principal.getName());
     }
