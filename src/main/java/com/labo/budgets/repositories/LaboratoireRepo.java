@@ -8,4 +8,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 @RepositoryRestResource
 public interface LaboratoireRepo extends JpaRepository<Laboratoire, Long> {
+
 }

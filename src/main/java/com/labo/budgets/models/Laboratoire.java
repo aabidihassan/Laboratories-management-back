@@ -13,7 +13,7 @@ import java.util.List;
 public class Laboratoire {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long id_labo;
     private String nom;
     private String adresse;

@@ -23,6 +23,12 @@ public class AccountRestController {
     public AccountRestController(@Autowired AccountService accountService){
         this.accountService = accountService;
     }
+    
+    @GetMapping("/")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public List<Utilisateur> getUsers(){
+    	return this.accountService.listUsers();
+    }
 
     @PostMapping("roletouser")
     @PostAuthorize("hasAnyAuthority('ADMIN')")

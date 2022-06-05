@@ -7,6 +7,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+
+import org.hibernate.annotations.Cascade;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,7 +31,7 @@ public class Utilisateur {
     private List<Besoin> besoins = new ArrayList<>();
     @OneToMany(mappedBy = "utilisateur")
     List<BudgetPersonnel> budgetPersonnels = new ArrayList<>();
-    @ManyToOne @JsonIgnore
+    @ManyToOne @JsonProperty(access = JsonProperty.Access.WRITE_ONLY) @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private Laboratoire labo;
 
 

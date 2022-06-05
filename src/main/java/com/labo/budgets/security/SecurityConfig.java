@@ -40,7 +40,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
         http.cors().configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues());
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        http.authorizeRequests().antMatchers("/login/**", "/token/**").permitAll();
+        http.authorizeRequests().antMatchers("/login/**", "/token/**", "/api/labos/newlabo").permitAll();
         //http.authorizeRequests().antMatchers("/api/**").hasAnyAuthority("ADMIN", "RESPO");
         http.authorizeRequests().anyRequest().authenticated();
         http.addFilter(new JwtAuthenticationFilter(authenticationManagerBean()));
