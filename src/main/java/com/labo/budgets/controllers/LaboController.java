@@ -38,7 +38,7 @@ public class LaboController {
 	@PostMapping("/newlabo")
 	@PreAuthorize("hasAuthority('ADMIN')")
 	public void newlabo(@RequestBody Utilisateur utilisateur) {
-		System.out.println("heeere");
+		System.out.println("heeeeeeeeeeeeere ana");
 		this.accountService.addNewUser(utilisateur);
 		this.accountService.affectRoleToUser(utilisateur.getUsername(), "RESPO");
 	}
