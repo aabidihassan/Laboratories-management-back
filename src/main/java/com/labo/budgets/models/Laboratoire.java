@@ -5,6 +5,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,9 +21,10 @@ public class Laboratoire {
     private String nom;
     private String adresse;
     private String telephone;
-    @OneToMany(mappedBy = "labo")
+    @OneToMany(mappedBy = "labo") @JsonIgnore
     private List<Budget> budgets = new ArrayList<>();
     @OneToMany(mappedBy = "labo")
     private List<Utilisateur> membres = new ArrayList<>();
+    
 
 }

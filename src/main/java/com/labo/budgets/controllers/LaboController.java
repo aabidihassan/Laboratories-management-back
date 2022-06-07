@@ -1,5 +1,6 @@
 package com.labo.budgets.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.labo.budgets.models.AppRole;
 import com.labo.budgets.models.Laboratoire;
 import com.labo.budgets.models.Utilisateur;
 import com.labo.budgets.services.AccountService;
@@ -38,9 +40,14 @@ public class LaboController {
 	@PostMapping("/newlabo")
 	@PreAuthorize("hasAuthority('ADMIN')")
 	public void newlabo(@RequestBody Utilisateur utilisateur) {
-		System.out.println("heeeeeeeeeeeeere ana");
 		this.accountService.addNewUser(utilisateur);
 		this.accountService.affectRoleToUser(utilisateur.getUsername(), "RESPO");
+	}
+	
+	@GetMapping("/usersByRole")
+	@PreAuthorize("hasAuthority('ADMIN') or hasAuthority('RESPO')")
+	public List<Laboratoire> getUsersByRole(@Param("role") String role){
+		return this.laboService.labosWithUsersByRole(List.of(new AppRole(role)));
 	}
 
 }
