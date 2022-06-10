@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.labo.budgets.models.AppRole;
 import com.labo.budgets.models.Laboratoire;
 import com.labo.budgets.models.Utilisateur;
-import com.labo.budgets.services.AccountService;
+import com.labo.budgets.services.AccountServiceImpl;
 import com.labo.budgets.services.LaboService;
 
 @RestController
@@ -25,9 +26,9 @@ import com.labo.budgets.services.LaboService;
 public class LaboController {
 	
 	private LaboService laboService;
-	private AccountService accountService;
+	private AccountServiceImpl accountService;
 	
-	public LaboController(@Autowired LaboService laboService, @Autowired AccountService accountService) {
+	public LaboController(@Autowired LaboService laboService, @Autowired AccountServiceImpl accountService) {
 		this.laboService = laboService;
 		this.accountService = accountService;
 	}
@@ -48,6 +49,12 @@ public class LaboController {
 	@PreAuthorize("hasAuthority('ADMIN') or hasAuthority('RESPO')")
 	public List<Laboratoire> getUsersByRole(@Param("role") String role){
 		return this.laboService.labosWithUsersByRole(List.of(new AppRole(role)));
+	}
+	
+	@GetMapping("/{user}")
+	@PreAuthorize("hasAuthority('USER') or hasAuthority('RESPO')")
+	public Laboratoire getLaboByUser(@PathVariable(name="user") String user){
+		return this.laboService.loadLaboByUsername(user);
 	}
 
 }

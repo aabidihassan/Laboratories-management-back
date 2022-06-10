@@ -1,9 +1,7 @@
 package com.labo.budgets.security;
 
-import com.labo.budgets.models.Utilisateur;
 import com.labo.budgets.security.filters.JwtAuthenticationFilter;
 import com.labo.budgets.security.filters.JwtAuthorizationFilter;
-import com.labo.budgets.services.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

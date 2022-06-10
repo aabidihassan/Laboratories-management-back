@@ -5,7 +5,8 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.labo.budgets.models.Utilisateur;
-import com.labo.budgets.services.AccountService;
+import com.labo.budgets.services.AccountServiceImpl;
+
 import org.springframework.security.core.userdetails.User;
 
 import java.util.Date;
@@ -41,7 +42,7 @@ public class JwtUtil {
                 .sign(JwtUtil.algorithm);
     }
 
-    public static String createAccessTokenFromRefreshToken(String jwt, String url, AccountService accountService){
+    public static String createAccessTokenFromRefreshToken(String jwt, String url, AccountServiceImpl accountService){
         JWTVerifier jwtVerifier = JWT.require(algorithm).build();
         DecodedJWT decodedJWT = jwtVerifier.verify(jwt);
         String username = decodedJWT.getSubject();

@@ -6,6 +6,9 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 @Entity
 @Data @AllArgsConstructor @NoArgsConstructor
 public class BudgetPersonnel {
@@ -13,9 +16,10 @@ public class BudgetPersonnel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id_budget_personnel;
-    @ManyToOne()
+    @ManyToOne @JsonIgnore
     private Utilisateur utilisateur;
-    @ManyToOne
+    @ManyToOne @JsonIgnore
     private Budget budget;
+    private double montant;
 
 }

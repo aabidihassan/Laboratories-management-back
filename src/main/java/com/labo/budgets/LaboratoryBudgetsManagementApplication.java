@@ -4,7 +4,9 @@ import com.labo.budgets.models.*;
 import com.labo.budgets.repositories.AnneeRepo;
 import com.labo.budgets.repositories.BudgetRepo;
 import com.labo.budgets.repositories.LaboratoireRepo;
-import com.labo.budgets.services.AccountService;
+import com.labo.budgets.services.AccountServiceImpl;
+import com.labo.budgets.services.BudgetService;
+
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -31,7 +33,7 @@ public class LaboratoryBudgetsManagementApplication {
     }
 
     @Bean
-    CommandLineRunner start(AccountService accountService, LaboratoireRepo laboratoireRepo, BudgetRepo budgetRepo, AnneeRepo anneeRepo){
+    CommandLineRunner start(AccountServiceImpl accountService, LaboratoireRepo laboratoireRepo, BudgetService budgetService, AnneeRepo anneeRepo){
         return args -> {
 
             Laboratoire labo = new Laboratoire();
@@ -44,11 +46,11 @@ public class LaboratoryBudgetsManagementApplication {
             anneeRepo.save(new Annee(2020, new ArrayList<>()));
 
             Budget budget = new Budget();
-            budget.setAnnee(anneeRepo.getById(2020));
+            budget.setAnnee(new Annee(2020, null));
             budget.setDb(5000);
             budget.setLabo(labo);
-            budget.setDr(70000);
-            budgetRepo.save(budget);
+            budget.setDr(7000);
+            budgetService.newBudget(labo.getNom(), budget);
 
             accountService.addNewRole(new AppRole("ADMIN"));
             accountService.addNewRole(new AppRole("USER"));

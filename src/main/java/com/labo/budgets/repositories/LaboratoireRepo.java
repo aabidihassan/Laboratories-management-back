@@ -1,5 +1,6 @@
 package com.labo.budgets.repositories;
 
+import com.labo.budgets.models.Budget;
 import com.labo.budgets.models.Laboratoire;
 import com.labo.budgets.models.Utilisateur;
 
@@ -19,5 +20,10 @@ public interface LaboratoireRepo extends JpaRepository<Laboratoire, Long> {
 	
 	@Query("select l from Laboratoire l where :user in elements(l.membres)")
 	Laboratoire findLabosByUser(@Param("user") Utilisateur user);
+	
+	Laboratoire findByNom(String nom);
+	
+	@Query("select b from Laboratoire l join l.budgets b where l.nom=:abc")
+	List<Budget> findBudgetsByLabo(@Param("abc") String labo);
 
 }

@@ -1,7 +1,8 @@
 package com.labo.budgets.security;
 
 import com.labo.budgets.models.Utilisateur;
-import com.labo.budgets.services.AccountService;
+import com.labo.budgets.services.AccountServiceImpl;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -17,8 +18,8 @@ import java.util.Collection;
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-    public AccountService accountService;
-    public UserDetailsServiceImpl(@Autowired AccountService accountService){
+    public AccountServiceImpl accountService;
+    public UserDetailsServiceImpl(@Autowired AccountServiceImpl accountService){
         this.accountService = accountService;
     }
 

@@ -54,5 +54,15 @@ public class LaboService {
 		
 	}
 	
+	public Laboratoire loadLaboByUser(Utilisateur user) {
+		return this.laboratoireRepo.findLabosByUser(user);
+	}
+	
+	public Laboratoire loadLaboByUsername(String user) {
+		Utilisateur utilisateur = new Utilisateur();
+		utilisateur.setUsername(user);
+		return this.loadLaboByUser(utilisateur);
+	}
+	
 
 }

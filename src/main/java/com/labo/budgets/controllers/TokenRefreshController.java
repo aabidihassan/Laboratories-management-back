@@ -2,7 +2,8 @@ package com.labo.budgets.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.labo.budgets.security.JwtUtil;
-import com.labo.budgets.services.AccountService;
+import com.labo.budgets.services.AccountServiceImpl;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -21,9 +22,9 @@ import java.util.Map;
 @RequestMapping("/token")
 public class TokenRefreshController {
 
-    private AccountService accountService;
+    private AccountServiceImpl accountService;
 
-    public TokenRefreshController(@Autowired AccountService accountService){
+    public TokenRefreshController(@Autowired AccountServiceImpl accountService){
         this.accountService = accountService;
     }
 

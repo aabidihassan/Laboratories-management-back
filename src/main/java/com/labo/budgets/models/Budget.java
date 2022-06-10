@@ -22,7 +22,7 @@ public class Budget {
     private Annee annee;
     @ManyToOne
     private Laboratoire labo;
-    @OneToMany(mappedBy = "budget")
+    @OneToMany(mappedBy = "budget") @JsonIgnore
     private List<BudgetPersonnel> budgetPersonnels = new ArrayList<>();
 
 }

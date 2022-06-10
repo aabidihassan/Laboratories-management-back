@@ -2,6 +2,7 @@ package com.labo.budgets.services;
 
 import com.labo.budgets.models.AppRole;
 import com.labo.budgets.models.Utilisateur;
+import com.labo.budgets.repositories.LaboratoireRepo;
 import com.labo.budgets.repositories.RoleRepo;
 import com.labo.budgets.repositories.UtilisateurRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,30 +14,29 @@ import java.util.List;
 
 @Service
 @Transactional
-public class AccountServiceImpl implements AccountService {
+public class AccountServiceImpl{
 
     private RoleRepo roleRepo;
     private UtilisateurRepo utilisateurRepo;
     private PasswordEncoder passwordEncoder;
+    private LaboratoireRepo laboratoireRepo;
 
-    public AccountServiceImpl(@Autowired RoleRepo roleRepo, @Autowired UtilisateurRepo utilisateurRepo, @Autowired PasswordEncoder passwordEncoder){
+    public AccountServiceImpl(RoleRepo roleRepo, UtilisateurRepo utilisateurRepo,PasswordEncoder passwordEncoder, LaboratoireRepo laboratoireRepo){
         this.roleRepo = roleRepo;
         this.utilisateurRepo = utilisateurRepo;
         this.passwordEncoder = passwordEncoder;
+        this.laboratoireRepo = laboratoireRepo;
     }
 
-    @Override
     public Utilisateur addNewUser(Utilisateur user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return utilisateurRepo.save(user);
     }
 
-    @Override
     public AppRole addNewRole(AppRole role) {
         return roleRepo.save(role);
     }
 
-    @Override
     public void affectRoleToUser(String username, String role) {
         Utilisateur user = utilisateurRepo.findByUsername(username);
         AppRole role1 = roleRepo.findByLibelle(role);
@@ -44,13 +44,22 @@ public class AccountServiceImpl implements AccountService {
         role1.getUsers().add(user);
     }
 
-    @Override
     public Utilisateur loadUserByUsername(String username) {
         return utilisateurRepo.findByUsername(username);
     }
 
-    @Override
     public List<Utilisateur> listUsers() {
         return utilisateurRepo.findAll();
+    }
+    
+    public List<Utilisateur> getLaboUsers(String username){
+    	return this.laboratoireRepo.findLabosByUser(this.loadUserByUsername(username)).getMembres();
+    }
+    
+    public Utilisateur createUser(String username, Utilisateur user) {
+    	user.setLabo(this.laboratoireRepo.findLabosByUser(this.loadUserByUsername(username)));
+    	user = this.addNewUser(user);
+    	this.affectRoleToUser(user.getUsername(), "USER");
+    	return user;
     }
 }
