@@ -8,6 +8,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -37,6 +39,20 @@ public class BudgetPersonnelController {
     @PreAuthorize("hasAuthority('RESPO')")
 	public List<Utilisateur> bpWithUsers(@PathVariable(name="user") String user, @Param("id") int id) {
 		return this.budgetPersonnelService.bpWithUsersByBudget(id, user);
+	}
+	
+	@PostMapping(path = "/")
+    @PreAuthorize("hasAuthority('RESPO')")
+	public BudgetPersonnel create(@RequestBody BudgetPersonnel bp) {
+		return this.budgetPersonnelService.save(bp);
+	}
+	
+	@GetMapping(path = "/byuser/{username}")
+    @PreAuthorize("hasAuthority('RESPO') or hasAuthority('USER')")
+	public List<Object[]> bpByUser(@PathVariable(name="username") String username) {
+		Utilisateur user = new Utilisateur();
+		user.setUsername(username);
+		return this.budgetPersonnelService.getUserBp(user);
 	}
 
 }

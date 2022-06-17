@@ -2,6 +2,8 @@ package com.labo.budgets.repositories;
 
 import com.labo.budgets.models.Annee;
 import com.labo.budgets.models.Budget;
+import com.labo.budgets.models.BudgetPersonnel;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -19,5 +21,8 @@ public interface BudgetRepo extends JpaRepository<Budget, Long> {
 //    public List<Budget> findByLabo_Id_labo(@Param("labo") int labo);
 
 	Budget findByLaboAndAnnee(Laboratoire labo, Annee annee);
+	
+	@Query("select b from Budget b where :bp in elements(b.budgetPersonnels)")
+	Budget findByBudgetPersonnel(@Param("bp") BudgetPersonnel bp);
 	
 }

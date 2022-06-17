@@ -5,6 +5,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +18,7 @@ public class TypeBesoin {
     @Id
     @Column(length = 10)
     private String libelle;
-    @OneToMany(mappedBy = "typeBesoin")
+    @OneToMany(mappedBy = "typeBesoin") @JsonIgnore
     private List<Besoin> besoins = new ArrayList<>();
 
 }

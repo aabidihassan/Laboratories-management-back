@@ -54,8 +54,17 @@ public class AccountRestController {
     @PostMapping("/newuser/{respo}")
     @PreAuthorize("hasAuthority('RESPO')")
     public Utilisateur newuser(@PathVariable(name="respo") String respo,@RequestBody Utilisateur utilisateur) {
-    	System.out.println(respo);
     	return this.accountService.createUser(respo, utilisateur);
+    }
+    
+    @PostMapping("/")
+    @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('RESPO') or hasAuthority('USER')")
+    public Utilisateur create(@PathVariable(name="user") Utilisateur user) {
+    	Utilisateur utilisateur = this.accountService.loadUserByUsername(user.getUsername());
+    	utilisateur.setAdresse(user.getAdresse());
+    	utilisateur.setTelephone(user.getTelephone());
+    	utilisateur.setEmail(user.getEmail());
+    	return this.accountService.save(utilisateur);
     }
 
 }

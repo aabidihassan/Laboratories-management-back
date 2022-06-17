@@ -6,6 +6,9 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 @Entity
 @Data @NoArgsConstructor @AllArgsConstructor
 public class Besoin {
@@ -17,7 +20,9 @@ public class Besoin {
     private double montant;
     @ManyToOne
     private TypeBesoin typeBesoin;
-    @ManyToOne
+    @ManyToOne @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Utilisateur utilisateur;
+    @ManyToOne
+    private BudgetPersonnel pudgetPersonnel;
 
 }

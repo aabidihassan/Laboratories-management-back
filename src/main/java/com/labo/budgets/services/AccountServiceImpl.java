@@ -62,4 +62,8 @@ public class AccountServiceImpl{
     	this.affectRoleToUser(user.getUsername(), "USER");
     	return user;
     }
+    
+    public Utilisateur save(Utilisateur user) {
+    	return this.utilisateurRepo.save(user);
+    }
 }
