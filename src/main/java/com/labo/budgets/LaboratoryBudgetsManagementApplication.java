@@ -7,21 +7,29 @@ import com.labo.budgets.repositories.LaboratoireRepo;
 import com.labo.budgets.services.AccountServiceImpl;
 import com.labo.budgets.services.BudgetService;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 @SpringBootApplication
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 @CrossOrigin(origins = "*")
+@EnableScheduling
 public class LaboratoryBudgetsManagementApplication {
+	
+	@Autowired
+	private AnneeRepo anneeRepo;
 
     public static void main(String[] args) {
         SpringApplication.run(LaboratoryBudgetsManagementApplication.class, args);
@@ -30,6 +38,11 @@ public class LaboratoryBudgetsManagementApplication {
     @Bean
     PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
+    }
+    
+    @Scheduled(cron = "0 1 0 1 1 *")
+    public void task() {
+        this.anneeRepo.save(new Annee(Calendar.getInstance().get(Calendar.YEAR), null));
     }
 
     @Bean
